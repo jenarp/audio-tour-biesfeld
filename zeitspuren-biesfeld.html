@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#171815">
+    <title>ZEITSPUREN BIESFELD — Ein Soundwalk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="style.css">
+
+
+</head>
+<body>
+<header class="top"><a class="brand" href="#top">Zeitspuren / Biesfeld</a>
+    <nav><a href="#idee">Idee</a><a href="#orte">Orte</a><a href="#karte">Karte</a><a href="#archiv">Zeitlinie</a></nav>
+    <span>Soundwalk · 01—06</span></header>
+<main id="top">
+    <section class="hero">
+        <div>
+            <div class="eyebrow">Ein Spaziergang durch Raum, Zeit und Erinnerung</div>
+            <h1>Zeit<span>spuren</span></h1></div>
+        <div class="hero-bottom"><p>Ein Ort ist nie nur ein Ort.<br>Er ist Erinnerung. Geräusch. Veränderung.</p>
+            <div class="hero-index">KÜRTEN-BIESFELD<br>6 STATIONEN · EIN DORF<br>HÖREN / SEHEN / ENTDECKEN</div>
+        </div>
+        <a class="scroll" href="#idee"><b>↓</b> Den Ort neu hören</a></section>
+    <section class="intro" id="idee">
+        <div>
+            <div class="eyebrow">01 / Das Projekt</div>
+            <h2>Biesfeld ist auch <em>von gestern.</em></h2></div>
+        <div class="intro-copy"><p class="big">Manche Geschichten stehen nicht auf Schildern. Sie liegen in Mauern, Wegen und Erinnerungen.</p>
+            <p>Dieser Soundwalk führt zu sechs Orten in Biesfeld. Er lädt dazu ein, genauer hinzusehen, Spuren zu lesen und Vertrautes neu
+                wahrzunehmen. Geschichte trifft auf Gegenwart. Fakten treffen auf Klang. Und zwischen beidem entsteht Platz für die eigene
+                Vorstellung.</p>
+            <p><strong>Kein Rundgang zum Abhaken. Eine Einladung zum Entdecken.</strong></p><a class="scroll" href="#orte"><b>↓</b> Die sechs Orte</a>
+        </div>
+    </section>
+
+    <section class="manifesto"><strong>HÖR HIN.<br>SCHAU ANDERS.<br>ENTDECKE
+        NEU.</strong><span>Ein Dorfarchiv in Bewegung<br>51°01′ N / 7°14′ E</span></section>
+
+    <section class="section" id="orte">
+        <div class="section-head">
+            <div>
+                <div class="eyebrow">02 / Die Route</div>
+                <h2>Sechs Orte.<br>Sechs Zeitfenster.</h2></div>
+            <p>Öffne eine Station. Lies die Spur. Nimm dir Zeit für das, was heute noch sichtbar ist.</p></div>
+        <div class="stations" id="station-list"></div>
+    </section>
+    <section class="map-section" id="karte">
+        <div class="map-grid">
+            <div>
+                <div class="eyebrow">03 / Orientierung</div>
+                <h2>Ein Dorf.<br>Viele Koordinaten.</h2>
+                <p>Die Karte verbindet die sechs Stationen zu einem Spaziergang durch Biesfeld und die umliegende Landschaft.</p>
+                <div class="map-note">Kartendaten © OpenStreetMap-Mitwirkende</div>
+            </div>
+            <div class="map-frame">
+                <div id="map"></div>
+            </div>
+        </div>
+    </section>
+    <section class="timeline" id="archiv">
+        <div class="eyebrow">04 / Fragmente einer Chronik</div>
+        <div class="section-head"><h2>Spuren in der Zeit.</h2>
+            <p>Ein paar Jahreszahlen. Keine vollständige Chronik – eher kleine Fenster in die Geschichte.</p></div>
+        <div class="timeline-list">
+            <div class="time-row"><b>1693</b><strong>Wallfahrtsort</strong><span>Eine Kapelle in Biesfeld wird erwähnt.</span></div>
+            <div class="time-row"><b>ca. 1790</b><strong>Alte Post</strong><span>Die Familie Frielingsdorf lässt sich nieder und errichtet die Gaststätte.</span>
+            </div>
+            <div class="time-row"><b>1903</b><strong>Stellmacherei</strong><span>Robert und Christine Braun kaufen das Haus.</span></div>
+            <div class="time-row">
+                <b>1915/16</b><strong>Pfarrhaus</strong><span>Das neue Pfarrhaus wird nach einem Entwurf von Lehmenkühler errichtet.</span></div>
+            <div class="time-row"><b>1911</b><strong>Erzgrube Katharinaglück</strong><span>Der Bergbau wird eingestellt.</span></div>
+            <div class="time-row"><b>1961 / 1968</b><strong>Die Gute Hand</strong><span>Gründung und Einweihung des Kinderdorfs.</span></div>
+        </div>
+    </section>
+</main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    const stations = [
+        {
+            no: '01',
+            slug: 'kirche',
+            title: 'Die Wallfahrtskirche',
+            place: 'Neuensaaler Straße 1 · Biesfeld',
+            lat: 51.01966374507852,
+            lng: 7.243816120478939,
+            theme: 'Glaube / Erinnerung',
+            story: 'Die Geschichte dieses Ortes reicht mindestens bis 1693 zurück. Bereits damals wird hier eine Kapelle erwähnt. Die Wallfahrt prägte Biesfeld über Generationen.',
+            look: 'Schau auf die Kirche und ihre Umgebung. Was erzählt der Ort, bevor du etwas über ihn weißt?',
+            arrival: 'Dein Rundgang beginnt an der katholischen Pfarrkirche „Zur schmerzhaften Mutter“ in der Neuensaaler Straße 1. Stelle dich auf den kleinen Platz vor dem Kircheneingang und lass deinen Blick über das Gebäude wandern. Nimm dir einen Moment Zeit, den Ort auf dich wirken zu lassen.\n' +
+                'Seit Jahrhunderten kommen Menschen an diesen Ort. Sie haben hier gebetet, gehofft und Trost gesucht.\n' +
+                '\n' +
+                'Wenn du bereit bist, kannst du nun in die Geschichte dieses besonderen Ortes eintauchen. Klicke dazu auf den Link oder scanne den QR-Code auf der eisernen Stele rechts neben dir.',
+            nextNavigation: 'Auch auf der anderen Straßenseite wartet ein Stück Biesfelder Geschichte. Direkt gegenüber der Kirche steht das ehemalige Pfarrhaus. Drehe dich um und überquere die Straße. Das aus Bruchsteinen errichtete Gebäude beherbergt heute die Volksbank.',
+            url: 'https://www.xn--gv-krten-95a.de/historische-objekte-in-k%C3%BCrten/katholische-pfarrkirche-zur-schmerzhaften-mutter-mit-wallfahrtskapelle-biesfeld'
+        },
+        {
+            no: '02',
+            slug: 'pfarrhaus',
+            title: 'Das ehemalige Pfarrhaus',
+            place: 'Neuensaaler Straße 2 · Biesfeld',
+            lat: 51.01969370971481,
+            lng: 7.244220090426702,
+            theme: 'Gemeinschaft / Alltag',
+            story: 'Das Pfarrhaus wurde 1915/16 nach einem Entwurf des Kölner Architekten Lehmenkühler errichtet. Das Bruchsteinmaterial beschafften Pfarrangehörige selbst. Seit 1987 steht das Gebäude unter Denkmalschutz.',
+            look: 'Betrachte die Fassade, das Material und die Dachgestaltung. Was unterscheidet dieses Haus von den Fachwerkhäusern im Ort?',
+            arrival: "Du stehst nun vor dem ehemaligen Pfarrhaus, unmittelbar neben der Kirche. Das Gebäude ist aus Bruchsteinen errichtet und unterscheidet sich dadurch deutlich von den Fachwerkhäusern, die du später auf deinem Weg kennenlernen wirst. Schau dir die Fassade und die Dachgestaltung in Ruhe an. Wenn du den Eingang und die Fenster betrachtest, kannst du dir vorstellen, wie hier früher das Pfarrleben organisiert wurde. Lies nun die Geschichte oder höre den Hörbeitrag über den unteren Link oder scannde den QR-Code auf der eisernen Stele.",
+            nextNavigation: "Von hier aus führt dich der Rundgang zum Fachwerkhaus „Zur Post“ an der Wipperfürther Straße 231. Orientiere dich von der Kirche aus in Richtung Wipperfürther Straße. Folge dem Straßenverlauf bis zu dem langgestreckten bergischen Fachwerkhaus. Achte auf die alten Linden vor dem Gebäude.",
+            url: 'https://www.xn--gv-krten-95a.de/historische-objekte-in-k%C3%BCrten/ehemaliges-pfarrhaus-biesfeld'
+        },
+        {
+            no: '03',
+            slug: 'zur-post',
+            title: 'Das Haus „Zur Post“',
+            place: 'Wipperfürther Straße 231 · Biesfeld',
+            lat: 51.01967642329725,
+            lng: 7.24462313116496,
+            theme: 'Reisen / Nachrichten',
+            story: 'Um 1790 ließ sich die Familie Frielingsdorf hier nieder und errichtete die Gaststätte „Alte Post“. Später kamen eine Poststation, ein Kramladen und eine Krautpatsche zur Herstellung von Apfelkraut hinzu.',
+            look: 'Achte auf die dunklen Balken, die hellen Gefache und die fünf alten Linden vor dem Haus. Stell dir vor, wer hier alles angekommen sein könnte.',
+            arrival: "Du bist am ehemaligen Gasthaus „Zur Post“ angekommen. Das Haus ist ein typisches bergisches Fachwerkgebäude. Nimm dir Zeit, die dunklen Balken, die hellen Gefache und die Fensterläden anzusehen. Vor dem Haus stehen fünf alte Linden, die ebenfalls zum historischen Ensemble gehören. Hier trafen sich früher Reisende und Einheimische; es gab eine Gastwirtschaft, einen Kramladen und eine Poststation. Mehr über die Geschichte dieses Hauses erfährst du über den Link oder, indem Du den QR-Code auf der eisernen Stele scannst.",
+            nextNavigation: "Als Nächstes suchst du die alte Stellmacherei. Sie liegt ebenfalls an der Wipperfürther Straße. Folge der Straße weiter und orientiere dich an der historischen Beschreibung des Stellmacherhauses. Das Haus liegt zu deiner linken hinter der Feuerwehr.",
+            url: 'https://www.xn--gv-krten-95a.de/historische-objekte-in-k%C3%BCrten/fachwerkhaus-zur-post-biesfeld'
+        },
+        {
+            no: '04',
+            slug: 'stellmacherei',
+            title: 'Die alte Stellmacherei',
+            place: 'Wipperfürther Straße 241 · Biesfeld',
+            lat: 51.02024121863453,
+            lng: 7.247596575033083,
+            theme: 'Handwerk / Arbeit',
+            story: 'Robert Braun kaufte das Haus 1903. Sein Sohn Josef übernahm 1923 die Stellmacherei. Bis etwa 1955 entstanden hier unter anderem Wagenräder, Heuwagen und verschiedene Karren.',
+            look: 'Achte auf das Haus und das kleinere Werkstattgebäude an seiner östlichen Seite. Welche Arbeitsschritte kannst du dir hier vorstellen?',
+            arrival: "Du stehst vor dem ehemaligen Stellmacherhaus. Achte auf das Haus und auf das kleinere Werkstattgebäude an seiner östlichen Seite. Hier wurden früher hölzerne Wagenräder und unterschiedliche Karren gefertigt – Dinge, die für das tägliche Leben und die Landwirtschaft unverzichtbar waren. Versuche dir vorzustellen, wie es geklungen haben muss, wenn in der Werkstatt Holz bearbeitet wurde. Auf der Objektseite kannst du mehr über das Handwerk erfahren und den Hörbeitrag abspielen.",
+            nextNavigation: "Die nächste Station ist das Kinderdorf „Die Gute Hand“ westlich oberhalb von Biesfeld. Nutze die Karte zur Orientierung. Wenn du über den Hof der Feuerwehr gehst, musst du nicht an der viel befahrenen Wipperfürther Straße entlanglaufen. Beachte, dass das Gelände der Einrichtung nur mit ausdrücklicher Erlaubnis betreten werden darf.",
+            url: 'https://www.xn--gv-krten-95a.de/historische-objekte-in-k%C3%BCrten/alte-stellmacherei-an-der-wipperf%C3%BCrther-stra%C3%9Fe-biesfeld'
+        },
+        {
+            no: '05',
+            slug: 'gute-hand',
+            title: 'Die Gute Hand',
+            place: 'In der Nähe der Jahnstraße 25 · Im Kreisel',
+            lat: 51.02140765196605,
+            lng: 7.238712197282157,
+            theme: 'Fürsorge / Wandel',
+            story: 'Das Kinderdorf „Die Gute Hand“ wurde 1961 von Prälat Jakob Holl gegründet und 1968 eingeweiht. Seitdem ist die Einrichtung ein bedeutender Teil der jüngeren Geschichte Biesfelds. Ihre Entstehung erzählt von Fürsorge, gesellschaftlicher Verantwortung und dem Wandel im Umgang mit Kindern und Jugendlichen.',
+            look: 'Ein Ort, der von Verantwortung und Gemeinschaft erzählt. Die Geschichte der Guten Hand steht zugleich für einen gesellschaftlichen Wandel und für die Entwicklung sozialer Fürsorge.',
+            arrival: "Du erreichst das Kinderdorf „Die Gute Hand“ gegenüber dem Sportplatz. Bitte beachte, dass es sich um eine Einrichtung mit eigenem Betrieb handelt. Bleibe deshalb auf den öffentlichen Wegen und betrete das Gelände nur, wenn dies ausdrücklich erlaubt ist. Vor der Schranke findest du neben dem Schild mit der Hand eine eiserne Informationsstele. Von hier aus hast du einen guten Überblick über die Einrichtung. Nimm dir einen Moment, die Informationen auf der Stele zu betrachten. Anschließend kannst du über die Objektseite den Hörbeitrag zu dieser Station starten.",
+            nextNavigation: "Von hier aus geht es zur letzten Station unseres Rundgangs: zur Erzgrube Katharinaglück in Miebach. Dafür stehen dir zwei Wege zur Auswahl: eine etwas längere Route durch Wald und Wiesen oder eine barrierefreie Strecke durch das Neubaugebiet. Nutze die Kartenansicht, um dich zu orientieren und den passenden Weg zu wählen.",
+            url: 'https://www.xn--gv-krten-95a.de/historische-objekte-in-k%C3%BCrten/kinderdorf-die-gute-hand-biesfeld'
+        },
+        {
+            no: '06',
+            slug: 'erzgrube-katharinaglueck',
+            title: 'Die Erzgrube Katharinaglück',
+            place: 'Lenzholzer Straße 41 · Biesfeld Miebach',
+            lat: 51.01822510548369,
+            lng: 7.232342539661654,
+            theme: 'Bergbau / Arbeit',
+            story: 'Die Katharinaglück gilt als die älteste Eisenerzgrube des Bensberger Erzreviers. Ihr Grubenfeld wurde 1761, damals noch unter dem Namen „Anna Fundgrube“, verliehen. Zunächst wurde das Eisenerz im Tagebau abgebaut, später auch unter Tage. Über viele Jahrzehnte prägte der Bergbau die Geschichte dieser Landschaft, bis der Betrieb 1911 eingestellt wurde.',
+            look: 'Schau dich um: Der Teich liegt in der Mulde des ehemaligen Tagebaus. Auch die bewachsenen Abraumhalden sind noch heute im Gelände zu erkennen. Sie erinnern an die Zeit, in der hier Eisenerz gewonnen wurde.',
+            next: 'Der Rundgang endet hier. Vielleicht gehst du mit einem anderen Blick durch Biesfeld weiter.',
+            arrival: "Du bist an der ehemaligen Eisenerzgrube Katharinaglück angekommen. Nimm dir einen Moment Zeit und lass die Landschaft auf dich wirken. Der heutige Teich befindet sich in der Mulde des früheren Tagebaus. Die bewachsenen Erhebungen ringsum sind Überreste der Abraumhalden. Was heute wie ein Stück Natur erscheint, war einst ein Ort harter körperlicher Arbeit. Die Katharinaglück gilt als die älteste Eisenerzgrube des Bensberger Erzreviers. Ihr Grubenfeld wurde 1761 unter dem Namen „Anna Fundgrube“ verliehen. Zunächst wurde das Erz im Tagebau, später auch unterirdisch gewonnen. 1911 endete hier der Bergbau.",
+            nextNavigation: "Damit endet dein Audio-Spaziergang durch Biesfeld. Vielleicht hast du unterwegs vertraute Orte mit anderen Augen gesehen – und neue Spuren entdeckt, an denen du sonst vorbeigegangen wärst. Nimm diese neuen Eindrücke mit und betrachte deinen Heimatort vielleicht auch in Zukunft mit etwas anderen Augen.",
+            url: 'https://www.xn--gv-krten-95a.de/historische-objekte-in-k%C3%BCrten/erzgrube-katarinengl%C3%BCck-d%C3%BCrscheid'
+        }
+    ];
+    const list = document.getElementById('station-list');
+    stations.forEach(s => {
+        const section = document.createElement('article');
+        section.className = 'station';
+        section.id = 'station-' + s.slug;
+        const hasLink = Boolean(s.url);
+        const link = hasLink
+            ? `<a class="object-link" href="${s.url}" target="_blank" rel="noopener">Geschichte lesen &amp; Hörbeitrag öffnen <span aria-hidden="true">↗</span></a>`
+            : `<span class="object-link is-placeholder" aria-disabled="true">Objektseite / Hörbeitrag folgt</span>`;
+
+        section.innerHTML = `
+            <div class="station-head">
+                <div class="station-number">STATION ${s.no} / 06</div>
+                <h3>${s.title}</h3>
+                <div class="station-address">${s.place}</div>
+            </div>
+            <div class="station-copy">
+                <p class="direction">${s.arrival}</p>
+                <p>${s.story}</p>
+                <p><strong>Vor Ort entdecken:</strong> ${s.look}</p>
+            </div>
+            <div class="audio-wrap">
+                <div class="audio-caption">Historisches Objekt · Text und Hörbeitrag</div>
+                ${link}
+            </div>
+            <div class="station-copy">
+                <div class="next">
+                    <span class="next-label">Der Weg zur nächsten Station</span>
+                    <p>${s.nextNavigation}</p>
+                </div>
+            </div>
+        `;
+        list.appendChild(section);
+    });
+
+    if (window.L) {
+        const map = L.map('map', {scrollWheelZoom: false}).setView([51.0199, 7.244], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
+        let pts = [];
+        stations.forEach(s => {
+            if (s.lat !== null) {
+                const icon = L.divIcon({className: '', html: `<div class="marker">${s.no}</div>`, iconSize: [30, 30], iconAnchor: [15, 15]});
+                L.marker([s.lat, s.lng], {icon}).addTo(map).bindPopup(`<b>${s.no} · ${s.title}</b><br><a href="#orte">Stationen ansehen</a>`);
+                pts.push([s.lat, s.lng])
+            }
+        });
+        if (pts.length > 1) map.fitBounds(pts, {padding: [25, 25], maxZoom: 16})
+
+
+        // // GeoJSON-Strecke laden
+        // fetch('./Untitled.json')
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             throw new Error('GeoJSON konnte nicht geladen werden.');
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(data => {
+
+                // // GeoJSON als Layer hinzufügen
+                // const routeLayer = L.geoJSON(data, {
+                //     style: function (feature) {
+                //         return {
+                //             color: '#e65343',
+                //             weight: 5,
+                //             opacity: 0.9,
+                //             lineCap: 'round',
+                //             lineJoin: 'round'
+                //         };
+                //     }
+                // }).addTo(map);
+
+            //     // Gesamte Strecke und alle Stationen anzeigen
+            //     const bounds = L.latLngBounds(pts);
+            //
+            //     if (routeLayer.getBounds().isValid()) {
+            //         bounds.extend(routeLayer.getBounds());
+            //     }
+            //
+            //     map.fitBounds(bounds, {
+            //         padding: [30, 30],
+            //         maxZoom: 16
+            //     });
+            //
+            // })
+            // .catch(error => {
+            //     console.error('Fehler beim Laden der GeoJSON-Datei:', error);
+            // });
+
+
+    } else {
+        document.getElementById('map').textContent = 'Karte nicht verfügbar.'
+    }
+</script>
+</body>
+</html>
