@@ -74,7 +74,7 @@ a {
             rgba(23, 24, 21, .80),
             rgba(23, 24, 21, .45)
     ),
-    url("../assets/biesfeld.jpeg") center center / cover no-repeat;
+    url("assets/biesfeld.jpeg") center center / cover no-repeat;
 }
 
 .hero:after {
